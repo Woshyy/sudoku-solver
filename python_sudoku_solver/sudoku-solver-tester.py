@@ -10,6 +10,16 @@ p = [8, 0, 6, 0, 1, 0, 0, 0, 0,
      0, 3, 0, 7, 5, 0, 2, 0, 0,
      0, 0, 0, 0, 2, 0, 1, 0, 5]
 
+p_hard = [0, 0, 8, 0, 0, 0, 0, 0, 0,
+          2, 0, 7, 0, 5, 0, 9, 0, 0,
+          0, 0, 0, 0, 0, 9, 0, 3, 0,
+          5, 0, 9, 0, 7, 0, 3, 0, 0,
+          0, 4, 0, 0, 0, 0, 0, 0, 0,
+          0, 0, 0, 1, 0, 0, 0, 0, 6,
+          0, 8, 0, 0, 0, 0, 2, 0, 0,
+          0, 3, 0, 0, 4, 0, 0, 0, 0,
+          4, 0, 2, 7, 0, 0, 0, 1, 0]
+
 assert(len(p) == 81)
 
 sudo = Sudoku(p, 9, 9)
@@ -46,3 +56,7 @@ assert (sudo.get_vertical_numbers(5) == [4, 6, 2])
 assert (sudo.get_vertical_numbers(6) == [8, 3, 2, 1])
 assert (sudo.get_vertical_numbers(7) == [9, 1, 8])
 assert (sudo.get_vertical_numbers(8) == [6, 9, 4, 5])
+
+
+sudo_hard = Sudoku(p_hard, 9, 9)
+sudo_hard.solve()

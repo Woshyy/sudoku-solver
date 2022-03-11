@@ -1,13 +1,41 @@
-from pickle import EMPTY_TUPLE
 from Sudoku_Square import *
 
 EMPTY_SQUARE = 0
 
 class Sudoku:
     def __init__(self, sudoku_squares_numbers, height, width):
-        self.init_sudoku_squares(sudoku_squares_numbers)
         self.height = height
         self.width = width
+        self.init_sudoku_squares(sudoku_squares_numbers)
+    
+    def solve_like_shit(self):
+        swap = True
+        height = self.get_height()
+        width = self.get_width()
+        while (swap):
+            swap = False
+            for y in range(height):
+                for x in range(width):
+                    square = self.get_sudoku_square(x, y)
+                    if (square.get_number() != EMPTY_SQUARE):
+                        continue; 
+                    square.set_possible_answer()
+                    if (len(square.get_possible_answer()) == 1):
+                        square.set_number(square.get_possible_answer().pop())
+                        swap = True 
+    
+    def solve(self):
+        for y in range(self.get_height()):
+            for x in range(self.get_width()):
+                square = self.get_sudoku_square(x, y)
+                if square.get_number() == EMPTY_SQUARE:
+                    possible_number = square.get_possible_numbers()
+                    for n in possible_number:
+                        square.set_number(n)
+                        self.solve()
+                        square.set_number(EMPTY_SQUARE)
+                    return
+        self.print_sudoku()
 
     #get all the numbers that has been chosen on the 9 x 9 square
     def get_block_square_numbers(self, x, y):
@@ -67,7 +95,20 @@ class Sudoku:
     
     def init_sudoku_squares(self, sudoku_squares_numbers):
         self.sudoku_squares = []
+        height = self.get_height()
+        width = self.get_width()
 
-        for i in range(len(sudoku_squares_numbers)):
-            self.sudoku_squares.append(Sudoku_Square(sudoku_squares_numbers[i], self))
-        
+        for y in range (height):
+            for x in range(width):
+                square = Sudoku_Square(x, y, sudoku_squares_numbers[y * width + x], self)
+                self.sudoku_squares.append(square)
+
+    def print_sudoku(self):
+        height = self.get_height()
+        width = self.get_width()
+
+        for y in range(height):
+            for x in range(width):
+                print(" " + str(self.get_sudoku_square(x, y).get_number()) + " ", end = "")
+            print("")
+         
