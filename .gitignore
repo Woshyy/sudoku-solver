@@ -1,2 +1,5 @@
 # ingnore workspace file
 *.code-workspace
+
+#ignore __pycache__
+__pycache__/
